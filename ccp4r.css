@@ -1,0 +1,38 @@
+/* CCP コンテナ */
+#container-div {
+	height: 465px;
+	width: 320px;
+}
+
+/* CCP が受信した相手からの音声 */
+#remote-audio {
+	display: none;
+}
+
+/* ログインボタン */
+#login-button {
+	width: 304px;
+	margin: 8px;
+}
+
+/* 録音開始ボタン */
+#start-button {
+	width: 304px;
+	margin: 8px;
+}
+
+/* 録音停止ボタン */
+#stop-button {
+	width: 304px;
+	margin: 8px;
+}
+
+/* CCP 表示セクション */
+.ccp-section {
+	float: left;
+}
+
+/* 音声表示セクション */
+.audio-section {
+	float: right;
+}

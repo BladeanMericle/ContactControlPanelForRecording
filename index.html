@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<title>Contact Control Panel for Recording</title>
+	<link rel="stylesheet" type="text/css" href="ccp4r.css" />
+	<script type="text/javascript" src="connect-streams-min.js"></script>
+	<script type="text/javascript" src="connect-rtc.min.js"></script>
+	<script type="text/javascript" src="ccp4r-config.js"></script>
+	<script type="text/javascript" src="ccp4r.js"></script>
+</head>
+<body>
+	<section class="ccp-section">
+		<div id="container-div"></div>
+		<audio id="remote-audio" autoplay></audio>
+		<button id="login-button">ログイン</button>
+		<button id="start-button">録音開始</button>
+		<button id="stop-button">録音停止</button>
+	</section>
+	<section class="audio-section">
+		<figure>
+			<figcaption>オペレータ側:</figcaption>
+			<audio id="local-record-audio" controls autoplay></audio>
+			<a id="local-record-download" download="operator.opus">ダウンロード</a>
+		</figure>
+		<figure>
+			<figcaption>お客様側:</figcaption>
+			<audio id="remote-record-audio" controls autoplay></audio>
+			<a id="remote-record-download" download="customer.opus">ダウンロード</a>
+		</figure>		
+	</section>		
+	<script type="text/javascript">
+	//<![CDATA[
+		(function() {
+			// ログはコンソールに出力します。
+			const loggingFunction = function(message)
+			{
+				console.log(message);
+			};
+
+			// ログ出力を登録
+			ccp4r.subscribeLogging(loggingFunction);
+
+			const startButton = document.getElementById('start-button');
+			startButton.style.display='none';
+			startButton.addEventListener('click', () => {
+				ccp4r.subscribeLogging(loggingFunction);
+				startButton.style.display='none';
+				stopButton.style.display='inline';
+			});
+
+			const stopButton = document.getElementById('stop-button');
+			stopButton.style.display='none';			
+			stopButton.addEventListener('click', () => {
+				ccp4r.unsubscribeLoggingAll();
+				stopButton.style.display='none';
+				startButton.style.display='inline';
+			});
+		})();
+	//]]>
+	</script>
+</body>
+</html>
