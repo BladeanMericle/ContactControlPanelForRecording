@@ -19,12 +19,14 @@
 #start-button {
 	width: 304px;
 	margin: 8px;
+	display: none;
 }
 
 /* 録音停止ボタン */
 #stop-button {
 	width: 304px;
 	margin: 8px;
+	display: none;	
 }
 
 /* CCP 表示セクション */
