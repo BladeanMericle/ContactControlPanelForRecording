@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="utf-8" />
+	<title>Microphone Test</title>
+	<script type="text/javascript" src="microphone-test.js"></script>
+</head>
+<body>
+	<p>
+		<button id="start-button">録音開始</button>
+		<button id="stop-button">録音停止</button>
+    </p>
+	<p>
+        <canvas id="record-canvas" height="40" width="200"></canvas>
+    </p>    
+	<p>
+        <audio id="record-audio" controls autoplay></audio>
+    </p>
+	<p>
+        <a id="record-download" download="voice.opus">ダウンロード</a>
+    </p>    		
+	<script type="text/javascript">
+	//<![CDATA[
+		(function() {
+            const startButton = document.getElementById('start-button');
+			startButton.disabled=false;
+			startButton.addEventListener('click', () => {
+				if (mtest.startRecording()) {
+                    startButton.disabled=true;
+				    stopButton.disabled=false;
+                }
+			});
+
+            const stopButton = document.getElementById('stop-button');
+            stopButton.disabled=true;            
+			stopButton.addEventListener('click', () => {
+                mtest.stopRecording();
+				startButton.disabled=false;                
+				stopButton.disabled=true;
+			});
+		})();
+	//]]>
+	</script>
+</body>
+</html>
