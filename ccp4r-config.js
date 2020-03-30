@@ -5,22 +5,29 @@
 	ccp4r.config = {};
 
 	/**
-	 * Amazon Connect のインスタンス名。
+	 * Amazon Connectのインスタンス名。
 	 * @type {string}
 	 */
 	const instanceName = '(インスタンス名)';
 
 	/**
-	 * ログインに使用する URL。
+	 * サインインに使用するURL。
 	 * @type {string}
 	 */
-	ccp4r.config.loginUrl = 'https://' + instanceName + '.awsapps.com/connect/login?';
+	ccp4r.config.signinUrl = 'https://' + instanceName + '.awsapps.com/connect/login?';
 
 	/**
-	 * Contact Control Panel の URL。
+	 * Contact Control PanelのURL。
 	 * @type {string}
 	 */
 	ccp4r.config.ccpUrl = 'https://' + instanceName + '.awsapps.com/connect/ccp-v2#/';
+
+	/**
+	 * ファイル出力のログレベルです。
+	 * "CRITICAL"、"ERROR"、"WARN"、"LOG"、"INFO"、"DEBUG"、"TRACE"、"TEST"のいずれかを設定してください。
+	 * @type {string}
+	 */
+	ccp4r.config.logLevel = 'DEBUG';
 
 	/**
 	 * 音声の受信間隔（ミリ秒）。
@@ -29,49 +36,82 @@
 	ccp4r.config.timeslice = 2000;
 
 	/**
-	 * Contact Control Panel を表示する div 要素の ID。
+	 * メディアストリームの取得間隔（ミリ秒）。
+	 * @type {number}
+	 */
+	ccp4r.config.getUserMediaInterval = 5000;
+
+	/**
+	 * Contact Control Panelを表示するdiv要素のID。
 	 * @type {string}
 	 */
 	ccp4r.config.containerDivId = 'container-div';
 
 	/**
-	 * ログインボタンの button 要素の ID。
+	 * サインインボタンのbutton要素のID。
 	 * @type {string}
 	 */
-	ccp4r.config.loginButtonId = 'login-button';
+	ccp4r.config.signinButtonId = 'signin-button';
 
 	/**
-	 * 通話相手側の音声を録音する audio 要素の ID。
-	 * 設定は用意しましたが、この ID は Amazon 製のライブラリが要求しているものなので、変更すると録音できなくなります。
+	 * お客様側の音声の取得に使用するaudio要素のID。
+	 * 設定は用意しましたが、このIDはAWSのライブラリが要求しているものです。
+	 * 変更すると録音できなくなります。
 	 * @type {string}
 	 */
 	ccp4r.config.remoteAudioId = 'remote-audio';
 
 	/**
-	 * オペレータ側録音音声の audio 要素の ID。
+	 * オペレーター側の録音音声のaudio要素のID。
 	 * 存在しなくても録音処理は行なえます。
 	 * @type {string}
 	 */
 	ccp4r.config.localRecordAudioId = 'local-record-audio';
 
 	/**
-	 * オペレータ側録音音声の a 要素の ID。
+	 * オペレーター側の録音音声のa要素のID。
 	 * 存在しなくても録音処理は行なえます。
 	 * @type {string}
 	 */
 	ccp4r.config.localRecordDownloadId = 'local-record-download';
 
 	/**
-	 * お客様側録音音声の audio 要素の ID。
+	 * オペレーター側の録音音声のcanvas要素のID。
+	 * 存在しなくても録音処理は行なえます。
+	 * @type {string}
+	 */
+	ccp4r.config.localRecordCanvasId = 'local-record-canvas';
+
+	/**
+	 * オペレーター側の録音音声のcanvas要素の描画色。
+	 * @type {string}
+	 */
+	ccp4r.config.localRecordCanvasColor = '#3CB371';
+
+	/**
+	 * お客様側の録音音声のaudio要素のID。
 	 * 存在しなくても録音処理は行なえます。
 	 * @type {string}
 	 */
 	ccp4r.config.remoteRecordAudioId = 'remote-record-audio';
 
 	/**
-	 * お客様側録音音声の a 要素の ID。
+	 * お客様側の録音音声のa要素のID。
 	 * 存在しなくても録音処理は行なえます。
 	 * @type {string}
 	 */
-	ccp4r.config.remoteRecordDownloadId = 'remote-record-download';	
+	ccp4r.config.remoteRecordDownloadId = 'remote-record-download';
+
+	/**
+	 * お客様側の録音音声のcanvas要素のID。
+	 * 存在しなくても録音処理は行なえます。
+	 * @type {string}
+	 */
+	ccp4r.config.remoteRecordCanvasId = 'remote-record-canvas';
+
+	/**
+	 * お客様側の録音音声のcanvas要素の描画色。
+	 * @type {string}
+	 */
+	ccp4r.config.remoteRecordCanvasColor = '#FFA07A';	
 })();

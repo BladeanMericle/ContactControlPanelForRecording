@@ -10,61 +10,34 @@
 	<script type="text/javascript" src="ccp4r.js"></script>
 </head>
 <body>
-	<section class="ccp-section">
+	<section class="section">
 		<div id="container-div"></div>
 		<audio id="remote-audio" autoplay></audio>
-		<button id="login-button">サインイン</button>
-		<button id="start-button">ログ出力開始</button>
-		<button id="stop-button">ログ出力停止</button>
+		<button id="signin-button" class="append-button">サインイン</button>
+		<br />
+		<button class="append-button" onclick="ccp4r.clearLog()">ログのクリア</button>
+		<br />
+		<button class="append-button" onclick="ccp4r.downloadLog()">ログのダウンロード</button>
 	</section>
-	<section class="audio-section">
-		<figure>
-			<figcaption>オペレーター側:</figcaption>
-			<audio id="local-record-audio" controls autoplay></audio>
-			<a id="local-record-download" download="operator.opus">ダウンロード</a>
-		</figure>
-		<figure>
-			<figcaption>お客様側:</figcaption>
+	<section class="section">
+		<div class="audio-div">
+			【お客様側】
+			<br />
+			<canvas id="remote-record-canvas" class="frequency-canvas"></canvas>
+			<br />
 			<audio id="remote-record-audio" controls autoplay></audio>
+			<br />
 			<a id="remote-record-download" download="customer.opus">ダウンロード</a>
-		</figure>		
-	</section>		
-	<script type="text/javascript">
-	//<![CDATA[
-		(function() {
-			// 初期化処理でログ出力停止ボタンを表示します。
-			const initFunction = function(message)
-			{
-				stopButton.style.display='inline';
-			};
-
-			// 初期化処理を登録
-			ccp4r.subscribeInit(initFunction);
-
-			// ログはコンソールに出力します。
-			const loggingFunction = function(message)
-			{
-				console.log(message);
-			};
-
-			// ログ出力を登録
-			ccp4r.subscribeLogging(loggingFunction);
-
-			const startButton = document.getElementById('start-button');
-			startButton.addEventListener('click', () => {
-				ccp4r.subscribeLogging(loggingFunction);
-				startButton.style.display='none';
-				stopButton.style.display='inline';
-			});
-
-			const stopButton = document.getElementById('stop-button');
-			stopButton.addEventListener('click', () => {
-				ccp4r.unsubscribeLoggingAll();
-				stopButton.style.display='none';
-				startButton.style.display='inline';
-			});
-		})();
-	//]]>
-	</script>
+		</div>
+		<div class="audio-div">
+			【オペレーター側】
+			<br />
+			<canvas id="local-record-canvas" class="frequency-canvas"></canvas>	
+			<br />
+			<audio id="local-record-audio" controls autoplay></audio>
+			<br />
+			<a id="local-record-download" download="operator.opus">ダウンロード</a>
+		</div>
+	</section>
 </body>
 </html>

@@ -1,40 +1,42 @@
-/* CCP コンテナ */
+/* CCPコンテナ */
 #container-div {
 	height: 465px;
 	width: 320px;
 }
 
-/* CCP が受信した相手からの音声 */
+/* CCPが受信した相手からの音声 */
 #remote-audio {
 	display: none;
 }
 
-/* サインインボタン */
-#login-button {
+/* 改造版CCPで追加したボタン */
+.append-button {
 	width: 304px;
 	margin: 8px;
 }
 
-/* 録音開始ボタン */
-#start-button {
-	width: 304px;
-	margin: 8px;
-	display: none;
-}
-
-/* 録音停止ボタン */
-#stop-button {
-	width: 304px;
-	margin: 8px;
-	display: none;	
-}
-
-/* CCP 表示セクション */
-.ccp-section {
+/* 各セクション */
+.section {
 	float: left;
+	margin: 4px;
+	padding: 4px;	
 }
 
-/* 音声表示セクション */
-.audio-section {
-	float: right;
+/* 音声の表示領域 */
+.audio-div {
+	border: 1px;
+	border-style: solid;
+	border-color: black;
+	border-radius: 4px;
+	margin: 8px;
+	padding: 8px;
+}
+
+/* 周波数の描画領域 */
+.frequency-canvas {
+	height: 80px;
+	width: 320px;
+	border: 1px;
+	border-style: solid;	
+	border-color: black;
 }
