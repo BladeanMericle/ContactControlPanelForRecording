@@ -429,14 +429,18 @@
 		});
 		contact.onEnded((contact) => {
 			logger.debug('Contact event. (Event type: Ended or destroyed)').withObject(getContactData(contact));
-			stopAudioProcess(contact.getContactId());
+			if (contact.getType() === 'voice') {
+				stopAudioProcess(contact.getContactId());
+			}
 		});
 		contact.onACW((contact) => {
 			logger.debug('Contact event. (Event type: ACW)').withObject(getContactData(contact));
 		});
 		contact.onConnected((contact) => {
 			logger.debug('Contact event. (Event type: Connected)').withObject(getContactData(contact));
-			startAudioProcess(contact.getContactId());
+			if (contact.getType() === 'voice') {
+				startAudioProcess(contact.getContactId());
+			}
 		});
 	}
 
