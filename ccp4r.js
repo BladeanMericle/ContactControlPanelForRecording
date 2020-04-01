@@ -83,12 +83,14 @@
 
 	/**
 	 * ログをクリアします。
+	 * このメソッドはAmazon Connect Streams APIのバージョンアップで動作しなくなる可能性があります。
 	 */
 	ccp4r.clearLog = function() {
 		if (logger) {
+			// 内部のログをクリアする関数はないので、ローテーションのタイマーを初期化してから手動でクリアしています。
 			logger.setLogRollInterval(1800000); // DEFAULT_LOG_ROLL_INTERVALと同じ値の30分
-			logger._rolledLogs = []; // クリアする関数はないはず
-			logger._logs = []; // クリアする関数はないはず
+			logger._rolledLogs = [];
+			logger._logs = [];
 		} else {
 			console.warn('Logger is not active.');
 		}
@@ -96,10 +98,23 @@
 
 	/**
 	 * ログをダウンロードします。
+	 * この関数はAmazon Connect Streams APIのバージョンアップで動作しなくなる可能性があります。
+	 * @param {string} fileName ログファイル名。
 	 */
-	ccp4r.downloadLog = function() {
+	ccp4r.downloadLog = function(fileName) {
 		if (logger) {
-			logger.download();
+			// connect.Logger.download() にログレベルフィルターとファイル名指定を加えた処理です。
+			const logLevelOrder = { TEST: 0, TRACE: 10, DEBUG: 20, INFO: 30, LOG: 40, WARN: 50, ERROR: 100, CRITICAL: 200 };
+			const logArray = logger._rolledLogs.concat(logger._logs).filter((logEntry) => {
+				return logLevelOrder[logEntry.level] >= logger._logLevel;
+			});
+			const logBlob = new Blob([JSON.stringify(logArray, undefined, 4)], ['text/plain']);
+			const downloadLink = document.createElement('a');
+			downloadLink.href = URL.createObjectURL(logBlob);
+			downloadLink.download = fileName || 'ccp4r.json';
+			document.body.appendChild(downloadLink);
+			downloadLink.click();
+			document.body.removeChild(downloadLink);
 		} else {
 			console.warn('Logger is not active.');
 		}

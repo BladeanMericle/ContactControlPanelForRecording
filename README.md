@@ -1,12 +1,8 @@
 # Contact Control Panel for Recording
 
-
-
 ## 概要
 
 Amazon ConnectのContact Control Panelの機能を拡張し、通話の音声を録音できるようにしました。
-
-
 
 ## 環境構築
 
@@ -16,8 +12,6 @@ Amazon ConnectのContact Control Panelの機能を拡張し、通話の音声を
 2. "ccp4r-config.js"にあるinstanceNameという変数に、Amazon Connectのインスタンス名を設定します。
 3. Webサーバーにhttpsで公開します。
 
-
-
 ### Amazon Connect側
 
 1. AWSマネジメントコンソールにログインします。
@@ -26,8 +20,6 @@ Amazon ConnectのContact Control Panelの機能を拡張し、通話の音声を
 4. [オリジンの追加]をクリックします。
 5. Webサーバのドメイン名またはポート番号までを入力し、[追加]をクリックします。
    - 最後に"/"があると追加できないのでご注意ください。
-
-
 
 ## 使用方法
 
@@ -43,8 +35,6 @@ Amazon ConnectのContact Control Panelの機能を拡張し、通話の音声を
    音声のコントローラーを操作すれば、オペレーター側とお客様側で別々に聞くこともできます。
    ダウンロードのリンクから音声をダウンロードすることもできます。
 
-
-
 ## 開発者向け情報
 
 ### ライブラリのバージョン
@@ -52,22 +42,26 @@ Amazon ConnectのContact Control Panelの機能を拡張し、通話の音声を
 - Amazon Connect Streams API: 1.4.3
 - Amazon Connect connect-rtc-js: 1.1.5
 
-
-
 ### グローバル変数
 
-"ccp4r"を使用します。
-
-
+- Amazon Connect Streams API: connect
+- Contact Control Panel for Recording: ccp4r
 
 ### 関数
 
-- ccp4r.clearLog(): Amazon Connect Streams API内に蓄積されているログをすべて削除します。通話の動作確認を行う前に実行することを想定していて、余計なログが入り込まないようにすることを目的としています。
-- ccp4r.downloadLog(): Amazon Connect Streams API内に蓄積されているログをダウンロードします。ファイル名は"agent-log.txt"固定で、ログの形式はJSONとなります。
-
-
+- ccp4r.clearLog(): Amazon Connect Streams API内に蓄積されているログをすべて削除します。
+  通話の動作確認を行う前に実行することを想定していて、余計なログが入り込まないようにすることを目的としています。
+- ccp4r.downloadLog(fileName): Amazon Connect Streams API内に蓄積されているログをダウンロードします。
+  引数でファイル名を指定しない場合、ファイル名は"ccp4r.json"となります。
+  ファイル形式はJSONです。
 
 ## 更新履歴
+
+### 0.1.1
+
+- チャットの開始・終了で音声の録音が反応しないよう修正しました。
+- ログのダウンロードでファイル名を指定できるようにしました。
+- ログのダウンロードでログレベルの設定が反映されるようにしました。
 
 ### 0.1.0
 
