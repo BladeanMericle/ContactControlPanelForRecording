@@ -40,19 +40,19 @@
 	let recordingContactId;
 
 	/**
-	 * オペレータ側のメディアストリーム。
+	 * オペレーター側のメディアストリーム。
 	 * @type {MediaStream}
 	 */
 	let localMediaStream;
 
 	/**
-	 * オペレータ側の音声録音。
+	 * オペレーター側の音声録音。
 	 * @type {AudioRecorder}
 	 */
 	let localRecorder;
 
 	/**
-	 * オペレータ側の音声描画。
+	 * オペレーター側の音声描画。
 	 * @type {AudioPainter}
 	 */
 	let localPainter;
@@ -205,7 +205,7 @@
 	}
 
 	/**
-	 * オペレータ側のメディアストリームの取得を試行します。
+	 * オペレーター側のメディアストリームの取得を試行します。
 	 * Google Chrome で画面を開いた直後だと失敗することがあったので、自動リトライするようにしています。
 	 */
 	async function getLocalMediaStream() {
