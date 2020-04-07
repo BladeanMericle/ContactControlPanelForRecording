@@ -28,10 +28,10 @@
 	let isRecordingEnabled = false;
 
 	/**
-	 * サインインウインドウのハンドル。
+	 * ログインウインドウのハンドル。
 	 * @type {Window}
 	 */
-	let signinWindowHandle;
+	let loginWindowHandle;
 
 	/**
 	 * 録音中の通話ID。
@@ -175,8 +175,8 @@
 		// 録音の初期化
 		initializeRecording();
 
-		// サインインボタンの初期化
-		initializeSigninButton();
+		// ログインボタンの初期化
+		initializeLoginButton();
 	}
 
 	/**
@@ -221,18 +221,18 @@
 	}
 
 	/**
-	 * サインインボタンを初期化します。
-	 * サインインの処理については、{@link https://dev.classmethod.jp/cloud/aws/amazon-connect-streams-login-button/} を参考にしています。
+	 * ログインボタンを初期化します。
+	 * ログインの処理については、{@link https://dev.classmethod.jp/cloud/aws/amazon-connect-streams-login-button/} を参考にしています。
 	 */
-	function initializeSigninButton() {
-		const signinButton = getValidatedElement(config.signinButtonId, 'BUTTON');
-		if (!signinButton) {
-			logger.warn('Not found signin button element. (ID: %s)', config.signinButtonId);						
+	function initializeLoginButton() {
+		const loginButton = getValidatedElement(config.loginButtonId, 'BUTTON');
+		if (!loginButton) {
+			logger.warn('Not found login button element. (ID: %s)', config.loginButtonId);						
 			return;
 		}
 
-		signinButton.addEventListener('click', () => {
-			signinWindowHandle = window.open(config.signinUrl);
+		loginButton.addEventListener('click', () => {
+			loginWindowHandle = window.open(config.loginUrl);
 		});
 	}
 
@@ -264,7 +264,7 @@
 
 	/**
 	 * 低レベルのイベントを購読します。
-	 * サインイン処理のために、いくつかのイベントで処理を行っています。
+	 * ログイン処理のために、いくつかのイベントで処理を行っています。
 	 */
 	function subscribeLowLevelEvent() {
 		const bus = connect.core.getEventBus();
@@ -284,7 +284,7 @@
 		// bus.subscribe(connect.EventType.SYNCHRONIZE, ()=>{});
 		// bus.subscribe(connect.EventType.TERMINATE, ()=>{});		
 		bus.subscribe(connect.EventType.TERMINATED, () => {
-			// リロードしないと、サインアウト後の再サインイン時にイベントが取得できないとのこと。
+			// リロードしないと、ログアウト後の再ログイン時にイベントが取得できないとのこと。
 			location.reload();
 		});
 		// bus.subscribe(connect.EventType.SEND_LOGS, ()=>{});
@@ -296,16 +296,16 @@
 		
 		/* エージェントに関する低レベルのイベント */
 		bus.subscribe(connect.AgentEvents.INIT, () => {
-			// サインインボタンを隠します。
-			const signinButton = document.getElementById(config.signinButtonId);
-			if (signinButton != null) {
-				signinButton.style.display = 'none';
+			// ログインボタンを隠します。
+			const loginButton = document.getElementById(config.loginButtonId);
+			if (loginButton != null) {
+				loginButton.style.display = 'none';
 			}
 
-			// サインインウインドウが開いていれば閉じます。
-			if (signinWindowHandle) {
-				signinWindowHandle.close();
-				signinWindowHandle = null;
+			// ログインウインドウが開いていれば閉じます。
+			if (loginWindowHandle) {
+				loginWindowHandle.close();
+				loginWindowHandle = null;
 			}
 		});
 		// bus.subscribe(connect.AgentEvents.UPDATE, ()=>{});

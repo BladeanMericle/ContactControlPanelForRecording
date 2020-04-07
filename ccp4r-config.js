@@ -11,10 +11,10 @@
 	const instanceName = '(インスタンス名)';
 
 	/**
-	 * サインインに使用するURL。
+	 * ログインに使用するURL。
 	 * @type {string}
 	 */
-	ccp4r.config.signinUrl = 'https://' + instanceName + '.awsapps.com/connect/login?';
+	ccp4r.config.loginUrl = 'https://' + instanceName + '.awsapps.com/connect/login?';
 
 	/**
 	 * Contact Control PanelのURL。
@@ -48,10 +48,10 @@
 	ccp4r.config.containerDivId = 'container-div';
 
 	/**
-	 * サインインボタンのbutton要素のID。
+	 * ログインボタンのbutton要素のID。
 	 * @type {string}
 	 */
-	ccp4r.config.signinButtonId = 'signin-button';
+	ccp4r.config.loginButtonId = 'login-button';
 
 	/**
 	 * お客様側の音声の取得に使用するaudio要素のID。
