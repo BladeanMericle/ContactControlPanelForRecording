@@ -488,8 +488,10 @@
 		// const isConnected = contact.isConnected(); // getStatus().type === 'connected' なので必要ありません。
 		let isDestroyed = false;
 
-		// Destroyed 時は Connection の情報取得時に例外が発生するので、catch して回避しています。
-		// 今のところ catch 以外に判別する方法が見つかっていません。
+		// Destroyed時はConnectionの情報取得時に例外が発生するので、catchして回避しています。
+		// 今のところcatch以外に判別する方法が見つかっていません。
+		// Contact.onEnded()が破棄時にも反応しないのであれば、Contact.onDestroy()でだけフラグを用意して回避することができます。
+		// 現バージョンで実現するには、低レベルのイベントで処理する必要がありそうです。
 		try {
 			connections = getConnectionsData(contact.getConnections());
 			initialConnectionId = getConnectionId(contact.getInitialConnection()); // = connection.isInitialConnection() == true
