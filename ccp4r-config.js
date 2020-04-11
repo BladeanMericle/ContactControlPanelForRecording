@@ -18,6 +18,7 @@
 
 	/**
 	 * Contact Control PanelのURL。
+	 * バージョン1にしたい場合は、"-v2"の部分を削除してください。
 	 * @type {string}
 	 */
 	ccp4r.config.ccpUrl = 'https://' + instanceName + '.awsapps.com/connect/ccp-v2#/';
