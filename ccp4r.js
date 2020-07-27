@@ -114,7 +114,12 @@
 			downloadLink.download = fileName || 'ccp4r.json';
 			document.body.appendChild(downloadLink);
 			downloadLink.click();
-			document.body.removeChild(downloadLink);
+
+			// https://stackoverflow.com/questions/30694453/
+			setTimeout(() => {
+				document.body.removeChild(downloadLink);
+				URL.revokeObjectURL(logBlob);
+			}, 100);
 		} else {
 			console.warn('Logger is not active.');
 		}
@@ -142,7 +147,7 @@
 			logger.setLogLevel(config.logLevel);
 			logger.setEchoLevel(config.logLevel);
 		} catch (error) {
-			logger.warn('Invalid log level. (Log level: %s)', config.logLevel).withException(error);	
+			logger.warn('Invalid log level. (Log level: %s)', config.logLevel).withException(error);
 		}
 
 		const containerDiv = getValidatedElement(config.containerDivId, 'DIV');
@@ -212,7 +217,7 @@
 		try {
 			localMediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 			isRecordingEnabled = true;
-			logger.debug('Got local media stream.');				
+			logger.debug('Got local media stream.');
 		} catch (error) {
 			isRecordingEnabled = false;
 			logger.warn('Failed to get local media stream.').withException(error);
@@ -227,7 +232,7 @@
 	function initializeLoginButton() {
 		const loginButton = getValidatedElement(config.loginButtonId, 'BUTTON');
 		if (!loginButton) {
-			logger.warn('Not found login button element. (ID: %s)', config.loginButtonId);						
+			logger.warn('Not found login button element. (ID: %s)', config.loginButtonId);
 			return;
 		}
 
@@ -275,14 +280,14 @@
 		// bus.subscribe(connect.EventType.API_REQUEST, ()=>{});
 		// bus.subscribe(connect.EventType.API_RESPONSE, ()=>{});
 		// bus.subscribe(connect.EventType.AUTH_FAIL, ()=>{});
-		// bus.subscribe(connect.EventType.ACCESS_DENIED, ()=>{});		
+		// bus.subscribe(connect.EventType.ACCESS_DENIED, ()=>{});
 		// bus.subscribe(connect.EventType.CLOSE, ()=>{});
 		// bus.subscribe(connect.EventType.CONFIGURE, ()=>{});
 		// bus.subscribe(connect.EventType.LOG, ()=>{});
 		// bus.subscribe(connect.EventType.MASTER_REQUEST, ()=>{});
 		// bus.subscribe(connect.EventType.MASTER_RESPONSE, ()=>{});
 		// bus.subscribe(connect.EventType.SYNCHRONIZE, ()=>{});
-		// bus.subscribe(connect.EventType.TERMINATE, ()=>{});		
+		// bus.subscribe(connect.EventType.TERMINATE, ()=>{});
 		bus.subscribe(connect.EventType.TERMINATED, () => {
 			// リロードしないと、ログアウト後の再ログイン時にイベントが取得できないとのこと。
 			location.reload();
@@ -293,7 +298,7 @@
 		// bus.subscribe(connect.EventType.API_METRIC, ()=>{});
 		// bus.subscribe(connect.EventType.CLIENT_METRIC, ()=>{});
 		// bus.subscribe(connect.EventType.MUTE, ()=>{});
-		
+
 		/* エージェントに関する低レベルのイベント */
 		bus.subscribe(connect.AgentEvents.INIT, () => {
 			// ログインボタンを隠します。
@@ -331,10 +336,10 @@
 		// bus.subscribe(connect.ContactEvents.CONNECTED, ()=>{});
 		// bus.subscribe(connect.ContactEvents.MISSED, ()=>{});
 		// bus.subscribe(connect.ContactEvents.ACW, ()=>{});
-		// bus.subscribe(connect.ContactEvents.VIEW, ()=>{});		
+		// bus.subscribe(connect.ContactEvents.VIEW, ()=>{});
 		// bus.subscribe(connect.ContactEvents.ENDED, ()=>{});
 		// bus.subscribe(connect.ContactEvents.ERROR, ()=>{});
-		// bus.subscribe(connect.ContactEvents.ACCEPTED, ()=>{});		
+		// bus.subscribe(connect.ContactEvents.ACCEPTED, ()=>{});
 	}
 
 	/**
@@ -611,7 +616,7 @@
 	 */
 	function startAudioProcess(contactId) {
 		if (!isRecordingEnabled) {
-			logger.warn('Can\'t start recording because local media stream is disabled.');				
+			logger.warn('Can\'t start recording because local media stream is disabled.');
 			return;
 		}
 
@@ -691,7 +696,7 @@
 
 		if (remotePainter) {
 			remotePainter.stop();
-		}		
+		}
 
 		if (localRecorder) {
 			localRecorder.stop();
@@ -730,10 +735,10 @@
 			this.mediaRecorder.addEventListener('dataavailable', (e) => {
 				this.chunks.push(e.data);
 			});
-			
+
 			// 録音終了時の処理
 			this.mediaRecorder.addEventListener('stop', () => {
-				logger.debug('[%s] Stop audio recording.', this.label);				
+				logger.debug('[%s] Stop audio recording.', this.label);
 
 				// 音声のURLの解放
 				if (this.blobUrl) {
@@ -815,8 +820,8 @@
 		 * @param {string} color 描画色。
 		 */
 		constructor(audioContext, mediaStream, canvasId, color) {
-			const canvasElement = getValidatedElement(canvasId, 'CANVAS');			
-			
+			const canvasElement = getValidatedElement(canvasId, 'CANVAS');
+
 			// 描画先が無ければ何もしません。
 			if (!canvasElement) {
 				return;
@@ -828,7 +833,7 @@
 			this.audioSourceNode.connect(this.analyserNode);
 
 			const bufferLength = this.analyserNode.frequencyBinCount;
-			const dataArray = new Uint8Array(bufferLength);			
+			const dataArray = new Uint8Array(bufferLength);
 			const canvasContext = canvasElement.getContext('2d');
 			canvasContext.strokeStyle = color;
 			canvasContext.fillStyle = color;
@@ -854,7 +859,7 @@
 				dataArray.forEach((element, index) => {
 					canvasContext.lineTo((index / bufferLength) * canvasWidth, canvasHeight - ((element / 255.0) * canvasHeight));
 				});
-				canvasContext.lineTo(canvasWidth, canvasHeight);         
+				canvasContext.lineTo(canvasWidth, canvasHeight);
 				canvasContext.closePath();
 				canvasContext.fill();
 				canvasContext.stroke();
@@ -867,7 +872,7 @@
 		start() {
 			if (this.draw) {
 				this.draw();
-			}			
+			}
 		}
 
 		/**
@@ -881,11 +886,11 @@
 			}
 
 			this.audioSourceNode = null;
-			
+
 			if (this.analyserNode) {
 				this.analyserNode.disconnect();
 			}
-			
+
 			this.analyserNode = null;
 		}
 	}
